@@ -1,9 +1,9 @@
 <template>
   <div class="hello">
-    <h1>Welcome to Keepr</h1>
-    <p>Get Started</p>
+    <h1>Welcome to Stickr</h1>
 
     <div class="heading">
+      <p>Get Started</p>
       <button class="btn btn-default b" @click="showLogin">LOGIN</button>
       <button class="btn btn-default b" @click="showSignup">SIGN UP</button>
 
@@ -11,16 +11,22 @@
       <div id="stuff">
 
         <form v-show="seen" @submit.prevent="createUser()">
-          <input class="formcss" type="text" v-model="user.name" placeholder="username">
-          <input class="formcss" type="password" v-model="user.password" placeholder="password">
-          <input class="formcss" type="text" v-model="user.email" placeholder="email">
+          <input class="formcss" type="text" v-model="credentials.email" placeholder="email">
+          <input class="formcss" type="password" v-model="credentials.password" placeholder="password">
           <button class="btn btn-default c" type="submit">CREATE</button>
         </form>
         <form v-show="unameSeen" @submit.prevent="loginUser()">
-          <input class="formcss" type="text" v-model="user.email" placeholder="email">
-          <input class="formcss" type="password" v-model="user.password" placeholder="password">
+          <input class="formcss" type="text" v-model="credentials.email" placeholder="email">
+          <input class="formcss" type="password" v-model="credentials.password" placeholder="password">
           <button class="btn btn-default c" type="submit">LOGIN</button>
         </form>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+        </div>
       </div>
     </div>
 
@@ -29,13 +35,17 @@
 </template>
 
 <script>
+  import { store } from '../store'
   export default {
     name: 'hello',
+    components: {
+    },
     data() {
       return {
-        user: {
+        credentials: {
           name: '',
           password: '',
+          confirmpassword: '',
           email: ''
         },
         name: '',
@@ -64,11 +74,12 @@
       },
 
       createUser() {
-        console.log(this.user)
-        this.$store.dispatch('createUser', this.user)
+        console.log(this.credentials)
+        this.$store.dispatch('register', this.credentials)
       },
       loginUser() {
-        this.$store.dispatch('login', this.user)
+        this.$store.dispatch('login', this.credentials)
+
       },
     },
   }

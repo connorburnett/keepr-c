@@ -1,23 +1,31 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.jpg">
+    <navbar></navbar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-}
+  import navbar from './components/Navbar'
+  export default {
+    name: 'app',
+    components: {
+      navbar,
+    },
+    mounted() {
+      // this.$store.dispatch("authenticate")
+    }
+  }
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
 </style>
