@@ -9,10 +9,12 @@ namespace keepr
     {
         // DONT FORGET TO REGISTER YOUR MODELS TO THE DATABASE
         new DbSet<User> Users { get; set; }
-        DbSet<Keep> Keeps { get; set; }
+        public DbSet<Keep> Keeps { get; set; }
+        public DbSet<Vault> Vaults { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=studentprojects.database.windows.net;Database=jakesKeeps;User ID=codeworks@studentprojects;Password=Applejuic3;Trusted_Connection=False;Encrypt=True");
+            optionsBuilder.UseSqlServer("Server=studentprojects.database.windows.net;Database=connorKeeps;User ID=codeworks@studentprojects;Password=Applejuic3;Trusted_Connection=False;Encrypt=True");
         }
         public KeeprContext(DbContextOptions<KeeprContext> options) : base(options)
         {
