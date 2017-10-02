@@ -39,6 +39,7 @@ vue.use(vuex)
 // function getAuth() {
 //   api('account').then(res => {
 //     console.log("Auth Response", res)
+//     commit('login', res.data)
 //   })
 // }
 
@@ -51,14 +52,20 @@ var store = new vuex.Store({
     credentials: {},
     viewUser: {},
     mainPage: {},
-    vaults: {},
+    vaults: [],
     keeps: {}
   },
 
   mutations: {
 
+    createUser(state, data) {
+      state.credentials = data
+    },
     setUser(state, data) {
       state.credentials = data
+    },
+    logoutUser(state, data) {
+      state.credentials = {}
     },
 
     setUserView(state, data) {
@@ -88,7 +95,7 @@ var store = new vuex.Store({
     // authentication
 
     authenticate({ commit, dispatch }) {
-      auth('authenticate').then(res => {
+      auth('account').then(res => {
         console.log(res)
         if (!res.data.data) {
           return router.push('/home')
@@ -107,7 +114,7 @@ var store = new vuex.Store({
     register({ commit, dispatch }, credentials) {
       auth.post("register", credentials).then(res => {
         if (res.data.message == "Successfully created user account") {
-          commit('setUser', res.data.data)
+          commit('createUser', res.data.data)
           return router.push('/home')
         }
       })
@@ -134,7 +141,7 @@ var store = new vuex.Store({
     logout({ commit, dispatch }) {
       auth.delete("logout").then(res => {
         if (!res.data.data) {
-          commit('setUser', {})
+          commit('logoutUser', {})
           return router.push('/')
         }
       })
