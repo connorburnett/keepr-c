@@ -10,7 +10,7 @@ let api = axios.create({
 })
 
 let auth = axios.create({
-  baseURL: '//kanbanvue.herokuapp.com/',
+  baseURL: 'http://localhost:5000/',
   timeout: 2000,
   withCredentials: true
 })
@@ -56,6 +56,7 @@ var store = new vuex.Store({
   },
 
   mutations: {
+
     setUser(state, data) {
       state.credentials = data
     },
@@ -63,6 +64,24 @@ var store = new vuex.Store({
     setUserView(state, data) {
       state.viewUser = data
     },
+
+    setUserView(state, data) {
+      state.viewUser = data
+    },
+    setUserKeeps(state, data) {
+      state.keeps = data
+    },
+    setKeepView(state, data) {
+      state.keepView = data
+    },
+
+    setVaults(state, data) {
+      state.vaults = data
+    },
+    setActiveVault(state, data) {
+      state.activeVault = data
+    },
+
   },
 
   actions: {
@@ -72,14 +91,14 @@ var store = new vuex.Store({
       auth('authenticate').then(res => {
         console.log(res)
         if (!res.data.data) {
-          return router.push('/hello')
+          return router.push('/home')
         }
         commit('setUser', res.data.data)
         router.push('/home')
       })
         .catch(err => {
           //commit('handleError', err)
-          router.push('/hello')
+          router.push('/')
         })
     },
 
@@ -92,9 +111,9 @@ var store = new vuex.Store({
           return router.push('/home')
         }
       })
-        .catch((err) => {
-          commit('handleError', err);
-        })
+      // .catch((err) => {
+      //   commit('handleError', err);
+      // })
     },
     login({ commit, dispatch }, credentials) {
       auth.post("login", credentials).then(res => {
@@ -108,9 +127,9 @@ var store = new vuex.Store({
         //console.log('user object', res.data.data);
 
       })
-        .catch(err => {
-          commit('handleError', err)
-        })
+      // .catch(err => {
+      //   commit('handleError', err)
+      // })
     },
     logout({ commit, dispatch }) {
       auth.delete("logout").then(res => {
@@ -119,6 +138,80 @@ var store = new vuex.Store({
           return router.push('/')
         }
       })
+    },
+
+    // profile and keep actions
+
+    getUser({ commit, dispatch }, userid) {
+      //console.log("User id in store:", userid)
+      api(`users/${userid}/profile`).then(res => {
+        //console.log("get", res.data)
+        commit('setUserView', res.data)
+      })
+    },
+    getUserKeeps({ commit, dispatch }, userid) {
+      api(`keeps/home/userid/${userid}`).then(res => {
+        // console.log(res)
+        commit('setUserKeeps', res.data)
+      })
+    },
+    getKeeps({ commit, dispatch }, obj) {
+      api(`/keeps/home/${obj.type}/${obj.query}`).then(res => {
+        // console.log(res)
+        commit('setUserKeeps', res.data)
+      })
+    },
+    keepView({ commit, dispatch }, keepid) {
+      api(`keeps/${keepid}`).then(res => {
+        commit('setKeepView', res.data)
+      })
+    },
+
+    // profile and vault actions
+
+    getVaults({ commit, dispatch }) {
+      api('uservaults')
+        .then(res => {
+          commit('setVaults', res.data.data)
+        })
+      // .catch(err => {
+      //   commit('handleError', err)
+      // })
+    },
+    getVault({ commit, dispatch }, id) {
+      api('vaults/' + id)
+        .then(res => {
+          commit('setActiveVault', res.data.data)
+        })
+      // .catch(err => {
+      //   commit('handleError', err)
+      // })
+    },
+
+    // create keeps
+
+    createKeep({ commit, dispatch }, keep) {
+      api.post("keeps", keep).then(res => {
+        //console.log(res)
+        dispatch('getUserKeeps', res.data.owner)
+
+      })
+        // .catch((err) => {
+        //   commit('handleError', err);
+        // })
+    },
+
+    // create vaults
+
+    createVault({ commit, dispatch }, vault) {
+      api.post("vaults", vault).then(res => {
+        //console.log(res)
+        dispatch('getVaults', res.data.owner)
+
+      })
+        // .catch((err) => {
+        //   commit('handleError', err);
+        // })
     }
   }
 

@@ -19,13 +19,14 @@
                 <!-- Regular view -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <!-- Begin if statement to check if user is logged in -->
-                    <div v-if="credentials.email != null" class="nav navbar-nav navbar-right align-everything">
+                    <div class="nav navbar-nav navbar-right align-everything">
                             <div class="menu">
-                                <router-link :to="'/profile/'+ user._id">Profile</router-link>
+                                <router-link :to="'/profile/'+ credentials._id">Profile</router-link>
                                 <li role="separator" class="divider"></li>
                                 <div @click="logout"><a href="#">Logout</a></div>
                             </div>
-                    </div> 
+                    </div>
+                    <!--v-if="credentials.email != null"-->
                     <!-- End of User login -->
 
                 </div>

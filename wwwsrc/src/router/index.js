@@ -6,6 +6,8 @@ import Home from '@/components/Home'
 import Keeps from '@/components/Keeps'
 import Profile from '@/components/Profile'
 import Vault from '@/components/Vault/'
+import ModalKeepCreate from '@/components/ModalKeepCreate'
+import ModalVaultCreate from '@/components/ModalVaultCreate'
 
 
 Vue.use(Router)
@@ -23,9 +25,19 @@ export default new Router({
       component: Home
     },
     {
-      path: '/profile/:profileId',
+      path: '/profile/:userId',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      children: [{
+        path: 'createkeep',
+        name: 'modal',
+        component: ModalKeepCreate
+      }],
+      children2: [{
+        path: 'createvault',
+        name: 'modal',
+        component: ModalVaultCreate
+      }]
     },
     {
       path: 'vault/:vaultId',
