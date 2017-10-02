@@ -147,8 +147,6 @@ var store = new vuex.Store({
         commit('setUserView', res.data)
       })
     },
-    //or is it profile/userid
-
 
     getUserKeeps({ commit, dispatch }, userid) {
       api(`home/userid/${userid}`).then(res => {
