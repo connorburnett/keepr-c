@@ -9,11 +9,11 @@ let api = axios.create({
   withCredentials: true
 })
 
-let auth = axios.create({
-  baseURL: 'http://localhost:5000/',
-  timeout: 2000,
-  withCredentials: true
-})
+// let auth = axios.create({
+//   baseURL: 'http://localhost:5000/',
+//   timeout: 2000,
+//   withCredentials: true
+// })
 vue.use(vuex)
 
 // function CreateAccountExample() {
@@ -63,6 +63,7 @@ var store = new vuex.Store({
       state.credentials = data
     },
     setUser(state, data) {
+      console.log(data)
       state.credentials = data
     },
     logoutUser(state, data) {
@@ -96,8 +97,7 @@ var store = new vuex.Store({
     // authentication
 
     authenticate({ commit, dispatch }) {
-      auth('account').then(res => {
-        console.log(res)
+      api('account').then(res => {
         if (!res.data.data) {
           return router.push('/home')
         }
