@@ -73,13 +73,10 @@ var store = new vuex.Store({
     setUserView(state, data) {
       state.viewUser = data
     },
-
-    setUserView(state, data) {
-      state.viewUser = data
-    },
     setUserKeeps(state, data) {
       state.keeps = data
     },
+
     setKeepView(state, data) {
       state.keepView = data
     },
@@ -97,7 +94,7 @@ var store = new vuex.Store({
     // authentication
 
     authenticate({ commit, dispatch }) {
-      api('account').then(res => {
+      api("account").then(res => {
         if (!res.data.data) {
           return router.push('/home')
         }

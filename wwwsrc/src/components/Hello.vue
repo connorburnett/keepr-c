@@ -43,9 +43,7 @@
     data() {
       return {
         credentials: {
-          name: '',
           password: '',
-          confirmpassword: '',
           email: ''
         },
         name: '',
@@ -56,8 +54,6 @@
       }
     },
     mounted() {
-    },
-    computed: {
     },
     methods: {
       showSignup() {
@@ -75,13 +71,25 @@
 
       createUser() {
         console.log(this.credentials)
-        this.$store.dispatch('register', this.credentials)
+        this.$store.dispatch('register', JSON.parse(JSON.stringify(this.credentials)))
+        this.credentials = {
+          email: '',
+          password: ''
+        }
       },
       loginUser() {
-        this.$store.dispatch('login', this.credentials)
-
+        this.$store.dispatch('login', JSON.parse(JSON.stringify(this.credentials)))
+        this.credentials = {
+          email: '',
+          password: ''
+        }
       },
     },
+    computed: {
+      credentials() {
+        return this.$store.state.credentials
+      }
+    }
   }
 
 </script>
