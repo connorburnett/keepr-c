@@ -9,11 +9,11 @@ let api = axios.create({
   withCredentials: true
 })
 
-// let auth = axios.create({
-//   baseURL: 'http://localhost:5000/',
-//   timeout: 2000,
-//   withCredentials: true
-// })
+let auth = axios.create({
+  baseURL: 'http://localhost:5000/',
+  timeout: 2000,
+  withCredentials: true
+})
 vue.use(vuex)
 
 // function CreateAccountExample() {
