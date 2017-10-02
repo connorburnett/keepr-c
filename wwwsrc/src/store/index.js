@@ -151,19 +151,19 @@ var store = new vuex.Store({
 
     getUser({ commit, dispatch }, userid) {
       //console.log("User id in store:", userid)
-      api(`users/${userid}/profile`).then(res => {
+      api(`profile/${userid}`).then(res => {
         //console.log("get", res.data)
         commit('setUserView', res.data)
       })
     },
     getUserKeeps({ commit, dispatch }, userid) {
-      api(`keeps/home/userid/${userid}`).then(res => {
+      api(`home/userid/${userid}`).then(res => {
         // console.log(res)
         commit('setUserKeeps', res.data)
       })
     },
     getKeeps({ commit, dispatch }, obj) {
-      api(`/keeps/home/${obj.type}/${obj.query}`).then(res => {
+      api(`/home/${obj.type}/${obj.query}`).then(res => {
         // console.log(res)
         commit('setUserKeeps', res.data)
       })
@@ -177,7 +177,7 @@ var store = new vuex.Store({
     // profile and vault actions
 
     getVaults({ commit, dispatch }) {
-      api('uservaults')
+      api('vaults')
         .then(res => {
           commit('setVaults', res.data.data)
         })

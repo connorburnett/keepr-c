@@ -13,7 +13,7 @@
       navbar,
     },
     mounted() {
-      this.$store.dispatch("authenticate")
+      this.$store.dispatch("account")
     }
   }
 
