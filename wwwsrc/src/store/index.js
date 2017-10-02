@@ -113,7 +113,7 @@ var store = new vuex.Store({
     // user actions
 
     register({ commit, dispatch }, credentials) {
-      auth.post("account", credentials).then(res => {
+      api.post("account", credentials).then(res => {
         if (res.data.message == "Successfully created user account") {
           commit('createUser', res.data.data)
           return router.push('/home')
@@ -121,7 +121,7 @@ var store = new vuex.Store({
       })
     },
     login({ commit, dispatch }, credentials) {
-      auth.post("account/login", credentials).then(res => {
+      api.post("account/login", credentials).then(res => {
         if (res.data.data) {
           commit('setUser', res.data.data)
           return router.push('/home')
@@ -132,7 +132,7 @@ var store = new vuex.Store({
       })
     },
     logout({ commit, dispatch }) {
-      auth.delete("account/logout").then(res => {
+      api.delete("account/logout").then(res => {
         if (!res.data.data) {
           commit('logoutUser', {})
           return router.push('/')
