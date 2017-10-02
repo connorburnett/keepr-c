@@ -34,7 +34,7 @@ namespace keepr.Controllers
         }
 
         // POST api/values
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public IEnumerable<Keep> Post([FromBody]Keep keep)
         {

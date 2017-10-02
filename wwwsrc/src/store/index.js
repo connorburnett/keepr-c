@@ -9,11 +9,11 @@ let api = axios.create({
   withCredentials: true
 })
 
-let auth = axios.create({
-  baseURL: 'http://localhost:5000/',
-  timeout: 2000,
-  withCredentials: true
-})
+// let auth = axios.create({
+//   baseURL: 'http://localhost:5000/',
+//   timeout: 2000,
+//   withCredentials: true
+// })
 vue.use(vuex)
 
 // function CreateAccountExample() {
@@ -53,7 +53,8 @@ var store = new vuex.Store({
     viewUser: {},
     mainPage: {},
     vaults: [],
-    keeps: {}
+    keeps: {},
+    keepView: {}
   },
 
   mutations: {
@@ -112,18 +113,15 @@ var store = new vuex.Store({
     // user actions
 
     register({ commit, dispatch }, credentials) {
-      auth.post("register", credentials).then(res => {
+      auth.post("account", credentials).then(res => {
         if (res.data.message == "Successfully created user account") {
           commit('createUser', res.data.data)
           return router.push('/home')
         }
       })
-      // .catch((err) => {
-      //   commit('handleError', err);
-      // })
     },
     login({ commit, dispatch }, credentials) {
-      auth.post("login", credentials).then(res => {
+      auth.post("account/login", credentials).then(res => {
         if (res.data.data) {
           commit('setUser', res.data.data)
           return router.push('/home')
@@ -131,15 +129,10 @@ var store = new vuex.Store({
         } else {
           res.data.data = {};
         }
-        //console.log('user object', res.data.data);
-
       })
-      // .catch(err => {
-      //   commit('handleError', err)
-      // })
     },
     logout({ commit, dispatch }) {
-      auth.delete("logout").then(res => {
+      auth.delete("account/logout").then(res => {
         if (!res.data.data) {
           commit('logoutUser', {})
           return router.push('/')
@@ -150,21 +143,20 @@ var store = new vuex.Store({
     // profile and keep actions
 
     getUser({ commit, dispatch }, userid) {
-      //console.log("User id in store:", userid)
-      api(`profile/${userid}`).then(res => {
-        //console.log("get", res.data)
+      api(`account/${userid}`).then(res => {
         commit('setUserView', res.data)
       })
     },
+    //or is it profile/userid
+
+
     getUserKeeps({ commit, dispatch }, userid) {
       api(`home/userid/${userid}`).then(res => {
-        // console.log(res)
         commit('setUserKeeps', res.data)
       })
     },
     getKeeps({ commit, dispatch }, obj) {
       api(`/home/${obj.type}/${obj.query}`).then(res => {
-        // console.log(res)
         commit('setUserKeeps', res.data)
       })
     },
@@ -177,22 +169,16 @@ var store = new vuex.Store({
     // profile and vault actions
 
     getVaults({ commit, dispatch }) {
-      api('vaults')
+      api(`${userid}/vaults`)
         .then(res => {
           commit('setVaults', res.data.data)
         })
-      // .catch(err => {
-      //   commit('handleError', err)
-      // })
     },
     getVault({ commit, dispatch }, id) {
-      api('vaults/' + id)
+      api(`${userid}/vaults/${vaultid}`)
         .then(res => {
           commit('setActiveVault', res.data.data)
         })
-      // .catch(err => {
-      //   commit('handleError', err)
-      // })
     },
 
     // create keeps
@@ -203,9 +189,6 @@ var store = new vuex.Store({
         dispatch('getUserKeeps', res.data.owner)
 
       })
-        // .catch((err) => {
-        //   commit('handleError', err);
-        // })
     },
 
     // create vaults
@@ -216,9 +199,6 @@ var store = new vuex.Store({
         dispatch('getVaults', res.data.owner)
 
       })
-        // .catch((err) => {
-        //   commit('handleError', err);
-        // })
     }
   }
 

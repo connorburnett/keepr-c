@@ -8,5 +8,6 @@ namespace keepr.Models
         
         public string ProfileImgUrl { get; set; }
         public List<Keep> MyKeeps { get; set; } = new List<Keep>();
+        public List<Vault> UserVaults {get; set; } = new List<Vault>();
     }
 }
