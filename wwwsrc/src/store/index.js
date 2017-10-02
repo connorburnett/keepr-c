@@ -51,7 +51,7 @@ var store = new vuex.Store({
   state: {
     credentials: {},
     viewUser: {},
-    mainPage: {},
+    home: {},
     vaults: [],
     keeps: {},
     keepView: {}
@@ -120,12 +120,12 @@ var store = new vuex.Store({
     login({ commit, dispatch }, credentials) {
       api.post("account/login", credentials).then(res => {
         if (res.data.data) {
-          commit('setUser', res.data.data)
           return router.push('/home')
-
-        } else {
-          res.data.data = {};
+        } else if (res.data.error) {
+          alert('Invalid Username or Password')
         }
+
+        commit('setUser', res)
       })
     },
     logout({ commit, dispatch }) {

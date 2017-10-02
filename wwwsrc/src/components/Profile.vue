@@ -65,8 +65,8 @@
             createVault(vault) {
                 this.showVaultModal = false;
             },
-            getVault(id) {
-                this.$store.dispatch('getVault', id)
+            getVault(vaultid) {
+                this.$store.dispatch('getVault', vaultid)
             }
         },
         computed: {

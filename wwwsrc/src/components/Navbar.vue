@@ -20,11 +20,15 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <!-- Begin if statement to check if user is logged in -->
                     <div class="nav navbar-nav navbar-right align-everything">
-                            <div class="menu" v-if="credentials.email != null">
-                                <router-link :to="'/profile/'+ credentials._id">Profile</router-link>
-                                <li role="separator" class="divider"></li>
-                                <div @click="logout"><a href="#">Logout</a></div>
-                            </div>
+                        <div class="menu" v-if="credentials.email != null">
+                            <router-link :to="'/profile/' + credentials._id">Profile</router-link>
+                            <li role="separator" class="divider"></li>
+                            <div @click="logout"><a href="#">Logout</a></div>
+                        </div>
+                        <!--v-if="credentials.email != null"-->
+                        <!--v-else-->
+                        <div class="menu" v-else>
+                        </div>
                     </div>
                     <!---->
                     <!-- End of User login -->
@@ -45,6 +49,10 @@
         },
         data() {
             return {
+                credentials: {
+                    email: '',
+                    password: ''
+                }
             }
         },
         methods: {

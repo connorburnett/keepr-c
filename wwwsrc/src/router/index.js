@@ -8,7 +8,7 @@ import Profile from '@/components/Profile'
 import Vault from '@/components/Vault/'
 import ModalKeepCreate from '@/components/ModalKeepCreate'
 import ModalVaultCreate from '@/components/ModalVaultCreate'
-
+import ModalAddKeep from '@/components/ModalAddKeep'
 
 Vue.use(Router)
 
